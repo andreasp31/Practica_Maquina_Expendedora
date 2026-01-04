@@ -1,0 +1,768 @@
+body{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-image: url('images/fondo_pokemon.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.bloque_fondo{
+    background-color: #FFF8F2;
+    justify-content: center;
+    border-radius: 20px;
+    display: flex;
+    width: 90em;
+    height: 55em;
+    align-self: center;
+    margin-left: 2em;
+    gap: 1em;
+}
+
+.bloque_derecho{
+    background-color: #FCF3E4;
+    border-width: 0.2em;
+    border-style: solid;
+    border-color: #332011;
+    align-self: baseline;
+    border-radius: 20px;
+    width: 30em;
+    height: 40em;
+    margin-top: 6em;
+    align-self: center;
+    display: flex;
+    flex-direction:column;
+    gap:0.2em;
+}
+
+.bloque_maquina{
+    background-image: url('images/fondo_maquina.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40em;
+    max-height: 52em;
+    aspect-ratio: 1 / 1; 
+    object-fit: cover; 
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.grid_elementos{
+    display: grid;
+    grid-template-rows: repeat(3,1fr);
+    grid-template-columns: repeat(4,1fr);
+    gap:0.3em;
+    padding-top: 9em;
+    padding-left: 2.5em;
+    width: 90%;
+    height: 60%;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.elementos{
+    align-self: baseline;
+    border-radius: 0.5em;
+    width: 8em;
+    height: 8em;
+}
+
+.elementos_admin{
+    align-self: baseline;
+    border-radius: 0.5em;
+    width: 6em;
+    height: 6em;
+}
+
+.recoge_elemento{
+    background-color: #C5915D;
+    border-width: 0.15em;
+    border-style: solid;
+    border-color: #332011;
+    align-self: baseline;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 25em;
+    height: 5em;
+    margin-left: 7.5em ;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#compra_realizada{
+    color: white;
+    text-align: center;
+}
+
+.bloques_elementos{
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+#bloques_elementos_admin_{
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 40em;
+}
+
+.bloques_elementos_admin{
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 0.8em;
+    border-width: 0.05em;
+    border-style: solid;
+    border-color: #332011;
+    border-radius: 1em;
+    padding: 0.5em;
+}
+
+.numero_elementos{
+    justify-content: center;
+    text-align: center;
+    background-color: #332011;
+    color: white;
+    width: 3em;
+    height: 1em;
+    border-radius: 0.2em;
+    padding: 0.1em;
+    margin-right: 0.6em;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+#elemento1{
+    background-image: url(images/grid_producto1.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#elemento2{
+    background-image: url(images/grid_producto2.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#elemento3{
+    background-image: url(images/grid_producto3.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#elemento4{
+    background-image: url(images/grid_producto4.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#elemento5{
+    background-image: url(images/grid_producto5.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#elemento6{
+    background-image: url(images/grid_producto6.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#elemento7{
+    background-image: url(images/grid_producto7.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#elemento8{
+    background-image: url(images/grid_producto8.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#elemento9{
+    background-image: url(images/grid_producto9.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#elemento10{
+    background-image: url(images/grid_producto10.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#elemento11{
+    background-image: url(images/grid_producto11.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#elemento12{
+    background-image: url(images/grid_producto12.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.pantalla_info{
+    color:#332011;
+    align-self: baseline;
+    border-radius: 1em;
+    margin-top: 0.5em;
+    width: 25em;
+    height: 4em;
+    align-self: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 0.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+.pantalla_interactiva{
+    display:flex;
+    flex-direction:row;
+    gap:0.3em;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+.pantalla_izq{
+    width: 20em;
+    height: 30em;
+    display: flex;
+    flex-direction: column;
+}
+
+.pantalla_num{
+    background-color: #EFDBB6;
+    color:#332011;
+    border-width: 0.15em;
+    border-style: solid;
+    border-color: #332011;
+    align-self: baseline;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 18em;
+    height: 5em;
+    align-self: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.pantalla_num1{
+    background-color: #EFDBB6;
+    color:#332011;
+    border-width: 0.15em;
+    border-style: solid;
+    border-color: #332011;
+    align-self: baseline;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 18em;
+    height: 2em;
+    align-self: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.grid_teclado{
+    display: grid;
+    grid-template-rows: repeat(4,1fr);
+    grid-template-columns: repeat(3,1fr);
+    gap:0.1em;
+    padding-top: 2em;
+    padding-left: 3.5em;
+    width: 70%;
+    height: 60%;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+#seccion_admin{
+    background-image: url(images/modo_admin.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 2em;
+    height: 2em;
+    margin: 1em;
+    cursor: pointer;
+}
+
+.pantalla_der{
+    width: 8em;
+    height: 30em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5em;
+    padding-left: 1em;
+}
+
+.teclas{
+    background-color: #332011;
+    border-radius: 0.5em;
+    width: 3.5em;
+    height: 3.5em;
+    color: white;
+    cursor: pointer;
+}
+
+
+.meter_dinero{
+    background-image: url(images/dinero.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 8em;
+    height: 8em;
+    margin-top: 6em;
+    margin-left: 1.2em;
+    cursor: pointer;
+}
+
+.devolver_dinero{
+    background-color: #EFDBB6;
+    color:#332011;
+    border-width: 0.15em;
+    border-style: solid;
+    border-color: #332011;
+    align-self: baseline;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 6em;
+    height: 6em;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#icono_teclado1{
+    background-image: url(images/Arrow_left.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+}
+
+#icono_teclado2{
+    background-image: url(images/Check.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+}
+
+.teclas_iconos{
+    display:flex; 
+    background-color: #332011;
+    border-radius: 0.5em;
+    width: 3.5em;
+    height: 3.5em;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    align-content: center;    
+}
+
+#ventana_cartera{
+    background-color: white;
+    width: 70em;
+    height: 45em;
+    border-radius: 2em;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+#ventana_interior{
+    background-color: white;
+    width: 70em;
+    height: 45em;
+    border-radius: 2em;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+#ventana_interior2{
+    background-color: white;
+    width: 90em;
+    height: 50em;
+    border-radius: 2em;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    gap:1em;
+}
+
+.ocultar{
+    display: none;
+}
+
+.ocultar1{
+    display: none;
+}
+
+
+#ventana_dinero{
+    z-index: 2;
+    position: fixed;
+    background-color: #00000066;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+}
+
+#ventana_admin{
+    z-index: 2;
+    position: fixed;
+    background-color: #00000066;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.logo{
+    background-image: url(images/logo_maquina.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 14em;
+    height: 10em;
+}
+
+.logo2{
+    background-image: url(images/logo_maquina.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 12em;
+    height: 8em;
+    margin-bottom: 1em;
+}
+
+.contenedor_monedas{
+    padding-top: 3em;
+    display: grid;
+    grid-template-rows: repeat(3,1fr);
+    grid-template-columns: repeat(3,1fr);
+    gap:1.5em;
+}
+
+.contenedor_admin{
+    margin-top: 1em;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap:0.5em;
+    height: 30em;
+}
+
+.botones_monedas{
+    border-width: 0.1em;
+    border-style: solid;
+    border-color: #332011;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    padding: 1em;
+    width: 15em;
+    cursor: pointer;
+    gap: 1em;
+}
+
+#cent5{
+    background-image: url(images/moneda_5_cents.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#cent10{
+    background-image: url(images/moneda_10_cent.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#cent20{
+    background-image: url(images/moneda_20_cent.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#cent50{
+    background-image: url(images/moneda_50_cent.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#euro1{
+    background-image: url(images/moneda_1_euro.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#euro2{
+    background-image: url(images/moneda_2_euro.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#euro5{
+    background-image: url(images/billete_5_euro.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#euro10{
+    background-image: url(images/billete_10_euro.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#euro20{
+    background-image: url(images/billete_20_euro.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+.foto_moneda{
+    width: 3em;
+    height: 3em;
+}
+
+.botones_monedas:hover{
+        background-color: #FFF8F2;
+}
+
+.contador_monedas{
+    background-color: #C5915D;
+    color:white;
+    border-width: 0.15em;
+    border-style: solid;
+    border-color: #332011;
+    align-self: baseline;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 25em;
+    height: 3.5em;
+    align-self: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 0.5em;
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    gap:1em;
+}
+
+#boton_saldo{
+    background-color: #332011;
+    color:white;
+    border-width: 0.15em;
+    border-style: solid;
+    border-radius: 2em;
+    margin-top: 3em;
+    width: 10em;
+    height: 3em;
+    align-self: center;
+    text-align: center;
+    justify-self: center;
+    cursor: pointer;
+}
+
+#boton_guardar_admin{
+    background-color: #332011;
+    color:white;
+    border-width: 0.15em;
+    border-style: solid;
+    border-radius: 2em;
+    margin-top: 7em;
+    width: 10em;
+    height: 3em;
+    align-self: center;
+    text-align: center;
+    justify-self: center;
+    cursor: pointer;
+}
+
+.ventana_inferior{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ventana_inferior2{
+    height: 30em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.boton_cerrar{
+    color: #332011;
+    padding-right: 66em;
+    cursor: pointer;
+}
+
+.boton_cerrar2{
+    color: #332011;
+    align-self: flex-start;
+    cursor: pointer;
+    padding-right: 30em;
+}
+
+#columna1{
+    height: 35em;
+    width:22em;
+    gap:1em;
+    display: flex;
+    flex-direction: column;
+}
+
+#columna2{
+    height: 35em;
+    width:22em;
+    gap:1em;
+    display: flex;
+    flex-direction: column;
+}
+
+#columna3{
+    height: 35em;
+    width:22em;
+    gap:1em;
+    display: flex;
+    flex-direction: column;
+}
+
+#columna4{
+    height: 35em;
+    width:22em;
+    gap:1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.columna_stock{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+}
+
+.stock_elementos{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+    justify-self: center;
+    gap:0.2em;
+}
+
+.stock_nuevo{
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    gap:1.5em;
+}
+
+.boton_menos{
+    background-color: #EFDBB6;
+    border-radius: 2em;
+    color: #332011;
+    width: 2em;
+    height: 2em;
+    justify-content: center;
+    display: flex;
+    align-items: center;   
+    cursor: pointer;
+}
+
+.boton_mas{
+    background-color: #EFDBB6;
+    border-radius: 2em;
+    color: #332011;
+    width: 2em;
+    height: 2em;
+    justify-content: center;
+    display: flex;
+    align-items: center;   
+    cursor: pointer;
+}
+
+.titulos_admin{
+    background-color: #EFDBB6;
+    color: #332011;
+    width: 10em;
+    height: 1.2em;
+    border-radius: 2em;
+    align-self: center;
+    text-align: center;
+    padding: 1em;
+}
+
+#parte_superior_ventana_interior2{
+    display: flex;
+    flex-direction: row;
+    gap:5em;
+    margin-bottom: 3em;
+    justify-content: center;
+}
+
+.compensar{
+    width: 30em;
+}
+
+.caja_dinero{
+    border-width: 0.05em;
+    border-style: solid;
+    border-color: #332011;
+    width: 20em;
+    height: 10em;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.botones_admin{
+    display: flex;
+    flex-direction: row;
+    gap:2em;
+    align-items: center;
+    justify-content: center;
+}

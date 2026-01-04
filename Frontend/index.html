@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title>Máquina Expendedora</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="bloque_fondo">
+      <div class="bloque_maquina">
+        <div class="grid_elementos">
+          <div class="bloques_elementos" id="obj1">
+            <div class="elementos" id="elemento1"></div>
+            <div class="numero_elementos">10</div>
+          </div>
+          <div class="bloques_elementos" id="obj2">
+            <div class="elementos" id="elemento2"></div>
+            <div class="numero_elementos">11</div>
+          </div>
+          <div class="bloques_elementos" id="obj3">
+            <div class="elementos" id="elemento3"></div>
+            <div class="numero_elementos">12</div>
+          </div>
+          <div class="bloques_elementos" id="obj4">
+            <div class="elementos" id="elemento4"></div>
+            <div class="numero_elementos">13</div>
+          </div>
+          <div class="bloques_elementos" id="obj5">
+            <div class="elementos" id="elemento5"></div>
+            <div class="numero_elementos">14</div>
+          </div>
+          <div class="bloques_elementos" id="obj6">
+            <div class="elementos" id="elemento6"></div>
+            <div class="numero_elementos">15</div>
+          </div>
+          <div class="bloques_elementos" id="obj7">
+            <div class="elementos" id="elemento7"></div>
+            <div class="numero_elementos">16</div>
+          </div>
+          <div class="bloques_elementos" id="obj8">
+            <div class="elementos" id="elemento8"></div>
+            <div class="numero_elementos">17</div>
+          </div>
+          <div class="bloques_elementos" id="obj9">
+            <div class="elementos" id="elemento9"></div>
+            <div class="numero_elementos">18</div>
+          </div>
+          <div class="bloques_elementos" id="obj10">
+            <div class="elementos" id="elemento10"></div>
+            <div class="numero_elementos">19</div>
+          </div>
+          <div class="bloques_elementos" id="obj11">
+            <div class="elementos" id="elemento11"></div>
+            <div class="numero_elementos">20</div>
+          </div>
+          <div class="bloques_elementos" id="obj12">
+            <div class="elementos" id="elemento12"></div>
+            <div class="numero_elementos">21</div>
+          </div>
+        </div>
+        <div id="seccion_recoger" class="recoge_elemento"><p id="compra_realizada"></p></div>
+      </div>
+      <div class="bloque_derecho">
+        <div class="pantalla_info">
+          <h3>INSERTAR DINERO Y SELECCIONAR</h3>
+        </div>
+        <div class="pantalla_interactiva">
+          <div class="pantalla_izq">
+            <div class="pantalla_num1"><p id="precio_producto"></p></div>
+            <div class="pantalla_num"><p id="pantalla_info"></p><p id="pantalla_selector"></p></div>
+            <div class="grid_teclado">
+              <div id="tecla1" class="teclas"><p>1</p></div>
+              <div id="tecla2" class="teclas"><p>2</p></div>
+              <div id="tecla3" class="teclas"><p>3</p></div>
+              <div id="tecla4" class="teclas"><p>4</p></div>
+              <div id="tecla5" class="teclas"><p>5</p></div>
+              <div id="tecla6" class="teclas"><p>6</p></div>
+              <div id="tecla7" class="teclas"><p>7</p></div>
+              <div id="tecla8" class="teclas"><p>8</p></div>
+              <div id="tecla9" class="teclas"><p>9</p></div>
+              <div class="teclas_iconos"><div id="icono_teclado1"></div></div>
+              <div id="tecla0" class="teclas"><p>0</p></div>
+              <div class="teclas_iconos"><div id="icono_teclado2"></div></div>
+            </div>
+            <div id="seccion_admin"></div>
+          </div>
+          <div class="pantalla_der">
+            <div class="meter_dinero" id="ir_monedas"></div>
+            <div class="devolver_dinero"><p id="cambio"></p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="ventana_dinero">
+      <div id="ventana_cartera">
+        <div class="boton_cerrar" id="volver_maquina"><p>X</p></div>
+        <div class="logo"></div>
+        <div class="ventana_inferior">
+          <div class="contador_monedas"><p>Saldo introducido: </p><p id="saldoReal">0,00</p></div>
+          <div class="contenedor_monedas">
+              <div class="botones_monedas" id="5c">
+                <div class="foto_moneda" id="cent5"></div>
+                <p>5 céntimos</p>
+              </div>
+              <div class="botones_monedas"  id="10c">
+                <div class="foto_moneda" id="cent10"></div>
+                <p>10 céntimos</p>
+              </div>
+              <div class="botones_monedas" id="20c">
+                <div class="foto_moneda" id="cent20"></div>
+                <p>20 céntimos</p>
+              </div>
+              <div class="botones_monedas" id="50c">
+                <div class="foto_moneda" id="cent50"></div>
+                <p>50 céntimos</p>
+              </div>
+              <div class="botones_monedas" id="1e">
+                <div class="foto_moneda" id="euro1"></div>
+                <p>1 euro</p>
+              </div>
+              <div class="botones_monedas" id="2e">
+                <div class="foto_moneda" id="euro2"></div>
+                <p>2 euros</p>
+              </div>
+              <div class="botones_monedas" id="5e">
+                <div class="foto_moneda" id="euro5"></div>
+                <p>5 euros</p>
+              </div>
+              <div class="botones_monedas" id="10e">
+                <div class="foto_moneda" id="euro10"></div>
+                <p>10 euros</p>
+              </div>
+              <div class="botones_monedas" id="20e">
+                <div class="foto_moneda" id="euro20"></div>
+                <p>20 euros</p>
+            </div>
+          </div>
+          <div id="boton_saldo"><p>Confirmar Saldo</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="ventana_admin">
+      <div id="ventana_interior2">
+        <div id="parte_superior_ventana_interior2">
+          <div class="boton_cerrar2" id="volver_maquina2"><p>X</p></div>
+          <div class="logo2"></div>
+          <div class="compensar"></div>
+        </div>
+        <div class="ventana_inferior2">
+          <div class="contenedor_admin">
+            <div id="columna1">
+              <div class="titulos_admin">Reponer Stock</div>
+              <div id="bloques_elementos_admin_">
+                <div class="bloques_elementos_admin" id="obj1">
+                  <div class="elementos_admin" id="elemento1"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>10</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj2">
+                  <div class="elementos_admin" id="elemento2"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>11</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj3">
+                  <div class="elementos_admin" id="elemento3"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>12</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj4">
+                  <div class="elementos_admin" id="elemento4"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>13</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj5">
+                  <div class="elementos_admin" id="elemento5"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>14</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj6">
+                  <div class="elementos_admin" id="elemento6"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>15</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj7">
+                  <div class="elementos_admin" id="elemento7"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>16</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj8">
+                  <div class="elementos_admin" id="elemento8"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>17</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj9">
+                  <div class="elementos_admin" id="elemento9"></div>
+                 <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>18</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj10">
+                  <div class="elementos_admin" id="elemento10"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>19</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj11">
+                  <div class="elementos_admin" id="elemento11"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>20</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj12">
+                  <div class="elementos_admin" id="elemento12"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>21</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Stock disponible:</p> 
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="columna2">
+              <div class="titulos_admin">Cambiar precios</div>
+              <div id="bloques_elementos_admin_">
+                <div class="bloques_elementos_admin" id="obj1">
+                  <div class="elementos_admin" id="elemento1"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>10</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>3.00</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj2">
+                  <div class="elementos_admin" id="elemento2"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>11</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>3.00</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj3">
+                  <div class="elementos_admin" id="elemento3"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>12</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>3.00</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj4">
+                  <div class="elementos_admin" id="elemento4"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>13</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>3.00</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj5">
+                  <div class="elementos_admin" id="elemento5"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>14</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>1.50</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj6">
+                  <div class="elementos_admin" id="elemento6"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>15</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>1.50</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj7">
+                  <div class="elementos_admin" id="elemento7"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>16</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>1.50</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj8">
+                  <div class="elementos_admin" id="elemento8"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>17</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>1.50</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj9">
+                  <div class="elementos_admin" id="elemento9"></div>
+                 <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>18</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>2.00</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj10">
+                  <div class="elementos_admin" id="elemento10"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>19</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>2.00</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj11">
+                  <div class="elementos_admin" id="elemento11"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>20</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>2.00</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bloques_elementos_admin" id="obj12">
+                  <div class="elementos_admin" id="elemento12"></div>
+                  <div class="columna_stock">
+                    <div class="stock_nuevo">
+                      <div class="numero_elementos"><p>21</p></div>
+                      <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                    </div>
+                    <div class="stock_elementos">
+                      <p>Precio establecido:</p> 
+                      <p>2.00</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="columna3">
+              <div class="titulos_admin">Sacar dinero</div>
+              <div class="caja_dinero"><div>Saldo disponible en la máquina: </div><div id="caja_total"></div></div>
+              <div class="botones_admin"><div class="boton_menos">-</div><p>Retirar</p><div class="boton_mas">+</div></div>
+            </div>
+            <div id="columna4">
+              <div class="titulos_admin">Dinero para cambio</div>
+              <div class="caja_dinero"><div>Saldo de la máquina para cambios: </div><div id="caja_total"></div></div>
+              <div class="botones_admin"><div class="boton_menos">-</div><p>Añadir</p><div class="boton_mas">+</div></div>
+            </div>
+          </div>
+          <div id="boton_guardar_admin"><p>Guardar</p></div>
+        </div>
+      </div>
+    </div>
+    <script src="renderer.js"></script>
+  </body>
+</html>

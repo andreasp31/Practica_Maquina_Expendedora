@@ -712,7 +712,7 @@ async function confirmarCompra(){
 
     //Verificar stock del producto
     if(productoActual.stock <= 0){
-        mostrarMensaje("Producto agotado", "mal");
+        mostrarMensajeEnPantalla("Producto agotado", "mal");
         return;
     }
 
@@ -736,8 +736,14 @@ async function confirmarCompra(){
         if(cambio > 0){
             const devolverCambio = document.getElementById('cambio');
             if(devolverCambio){
-            //Nos enseña el cambio
-            devolverCambio.textContent = "Cambio: " + saldoTotal.toFixed(2) + "€";
+                //Nos enseña el cambio
+                devolverCambio.textContent = "Cambio: " + saldoTotal.toFixed(2) + "€";
+                devolverCambio.addEventListener('click',function(){
+                    setTimeout(()=>{
+                    resetearTodo();
+                    },3000);    
+                })
+                
             }
         }
         //Al hacer la compra ya nos enseña que está realizada y nos da un cambio
@@ -750,9 +756,7 @@ async function confirmarCompra(){
         //actualizar el stock localmente por si se quiere realizar otra compra
         productoActual.stock -= 1;
         //resetea la pantalla y los bloques con notificaciones
-        setTimeout(()=>{
-            resetearTodo();
-        },3000);
+        
     }
     else{
         console.log("Error en al compra");

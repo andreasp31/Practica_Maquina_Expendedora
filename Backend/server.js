@@ -23,6 +23,7 @@ async function connectarBd(){
         });
         console.log("Conectado a MongoDB");
         await iniciarProductos();
+        await iniciarMonedas();
 
         app.listen(PORT,'0.0.0.0', () =>{
             console.log(`Servidor ejecutándose en http://localhost:${3000}`);
@@ -53,9 +54,20 @@ const CajaEsquema = new mongoose.Schema({
     saldoCambio: { type: Number, default: 50 }
 });
 
+//Para saber que monedas hay en la caja y devolverla añado un nuevo esquema para las monedas
+const MonedaEsquema = new mongoose.Schema({
+    valor: Number,
+    cantidad: {
+        type: Number,
+        default: 0
+    },
+    tipo: String
+})
+
 const Producto = mongoose.model('Producto', ProductoEsquema);
 const Venta = mongoose.model('Venta', VentaEsquema);
 const Caja = mongoose.model('Caja', CajaEsquema);
+const Moneda = mongoose.model('Moneda',MonedaEsquema);
 
 //Iniciar la base de datos con datos base
 async function iniciarProductos(){
@@ -76,6 +88,25 @@ async function iniciarProductos(){
             {codigo:'21',precio:2.00,stock:10}
         ];
         await Producto.insertMany(productos);
+    }
+}
+
+//Iniciar la base de datos con unas monedas
+async function iniciarMonedas(){
+    const lista = await Moneda.countDocuments();
+    if(lista === 0){
+        const monedas = [
+            { valor: 0.05, tipo: "5c", cantidad: 20 },
+            { valor: 0.10, tipo: "10c", cantidad: 20 },
+            { valor: 0.20, tipo: "20c", cantidad: 20 },
+            { valor: 0.50, tipo: "50c", cantidad: 20 },
+            { valor: 1.00, tipo: "1e", cantidad: 20 },
+            { valor: 2.00, tipo: "2e", cantidad: 15 },
+            { valor: 5.00, tipo: "5e", cantidad: 5 },
+            { valor: 10.00, tipo: "10e", cantidad: 2 },
+            { valor: 20.00, tipo: "20e", cantidad: 2 }
+        ]
+        await Moneda.insertMany(monedas);
     }
 }
 
@@ -135,44 +166,110 @@ app.post('/api/comprar',async(req,res)=>{
         }
         //Calculamos el cambio
         const cambio = pagoRecibido - producto.precio;
-        if(cambio > 0 && cambio > caja.saldoCambio){
-            console.log("No hay cambio disponible");
-            return res.status(400).json({
-                success: false,
-                error: "No hay cambio disponible en la máquina"
+        if(cambio > 0){
+            let monedasDisponibles = (await Moneda.find({cantidad:{$gt:0}})).toSorted({valor:-1});
+            let cambioRestante = cambio;
+            let monedasDevolver = [];
+
+            for(let i=0; i<monedasDisponibles.length;i++){
+                let moneda =  monedasDisponibles[i];
+                if(cambioRestante <=0){
+                    break;
+                }
+                let cantidadNecesaria = Math.floor(cambioRestante/moneda.valor);
+                let cantidadUsar = Math.min(cantidadNecesaria,moneda.cantidad);
+
+                if(cantidadUsar>0){
+                    cambioRestante -= cantidadUsar * moneda.valor;
+                    cambioRestante = Math.round(cambioRestante*100)/100;
+
+                    //Restar monedas usadas de la base de datos
+                    moneda.cantidad -= cantidadUsar;
+                    await moneda.save();
+
+                    monedasDevolver.push({
+                        tipo: moneda.tipo,
+                        cantidad: cantidadUsar,
+                        valor: moneda.valor,
+                        total: cantidadUsar * moneda.valor
+                    })
+                }
+            }
+
+            //Ver si se puede dar todo el cambio
+            if(cambioRestante>0.01){
+                return res.status(400).json({
+                    success:false,
+                    error:"No hay cambio suficiente en la máquina",
+                    cambioFaltante: cambioRestante
+                })
+            }
+
+            //Reducir stock
+            producto.stock -=1;
+            await producto.save();
+
+            //Actualizar caja
+            caja.saldoMaquina += producto.precio;
+            if(cambio > 0){
+                caja.saldoCambio -= cambio;
+            }
+            await caja.save();
+
+            //Guardar venta
+            const venta = await Venta.create({
+                codigoProducto: producto.codigo,
+                precio: producto.precio,
+                pagoRecibido: pagoRecibido,
+                cambioDevuelto: cambio,
+                monedasCambio: monedasDevolver
+            })
+            console.log("Compra exitosa",venta);
+            //Mensajes detallados para el front 
+            return res.json({
+                success: true,
+                message: "Compra realizada con éxito",
+                producto: producto.codigo,
+                precio: producto.precio,
+                cambio: cambio,
+                monedasCambio: monedasDevolver,
+                cambioDesglose: desgloseMonedas,
+                nuevoStock: producto.stock,
+                ventaId: venta._id
             });
         }
+        else{
+            //Caso sin cambio, si el pago es exacto
+            //Reducir stock
+            producto.stock -=1;
+            await producto.save();
 
-        //Reducir stock
-        producto.stock -=1;
-        await producto.save();
+            //Actualizar caja
+            caja.saldoMaquina += producto.precio;
+            await caja.save();
 
-        //Actualizar caja
-        caja.saldoMaquina += producto.precio;
-        if(cambio > 0){
-            caja.saldoCambio -= cambio;
+            //Guardar venta
+            const venta = await Venta.create({
+                codigoProducto: producto.codigo,
+                precio: producto.precio,
+                pagoRecibido: pagoRecibido,
+                cambioDevuelto: 0,
+                monedasCambio: []
+            })
+            console.log("Compra exitosa",venta);
+            //Mensajes detallados para el front 
+            return res.json({
+                success: true,
+                message: "Compra realizada con éxito",
+                producto: producto.codigo,
+                precio: producto.precio,
+                cambio: 0,
+                monedasCambio: [],
+                cambioDesglose: "",
+                nuevoStock: producto.stock,
+                ventaId: venta._id
+            });
         }
-        await caja.save();
-
-        //Guardar venta
-        const venta = await Venta.create({
-            codigoProducto: producto.codigo,
-            precio: producto.precio,
-            pagoRecibido: pagoRecibido,
-            cambioDevuelto: cambio
-        })
-        console.log("Compra exitosa",venta);
-
-        //Mensajes detallados para el front 
-        return res.json({
-            success: true,
-            message: "Compra realizada con éxito",
-            producto: producto.codigo,
-            precio: producto.precio,
-            cambio: cambio,
-            nuevoStock: producto.stock,
-            ventaId: venta._id
-        });
 
     }
     catch(error){
@@ -300,6 +397,125 @@ app.post('/api/admin/agregar',async(req,res)=>{
     }
 })
 
+//Obtenemos las monedas
+app.get('/api/monedas',async(req,res)=>{
+    try{
+        //Buscamos la colección de monedas y ordena los cambos en orden ascendente(1)
+        const monedas = (await Moneda.find()).sort({valor:1});
+        res.json({ 
+            success: true, 
+            data: monedas 
+        });
+    }
+    catch(error){
+        console.error("Error obteniendo monedas:", error);
+    }
+})
+
+//Actualizamos las monedas
+app.put('/api/monedas/:tipo',async(req,res)=>{
+    try{
+        const{tipo} = req.params;
+        const{cantidad} = req.body;
+
+        const moneda = await Moneda.findOne({tipo});
+        if(!moneda){
+            return res.status(404).json({
+                success: false, 
+                error: "Moneda no encontrada"
+            })
+        }
+        moneda.cantidad = cantidad;
+        await moneda.save();
+        res.json({
+            success:true,
+            message:"Moneda actualizada"
+        })
+    }
+    catch(error){
+        console.error("Error actualizando monedas:", error);
+    }
+})
+
+//Algoritmo para calcular cambio con monedas disponibles (Aquí tuve que buscar también algo que estaba perdida)
+app.post('/api/calcular-cambio',async(req,res)=>{
+    try{
+        //Cantidad a devolver la recogemos del frontend
+        const {cantidad} = req.body;
+
+        //aqui buscamos las monedas disponibles ($gt sirve como "mayor que" es un operador de consulta de mongodb) de mayor a menor valor
+        const monedasDisponibles = (await Moneda.find({cantidad:{$gt:0}})).sort({valor:-1});
+
+        //Voy a ponerlo con un ejemplo para entenderlo mejor
+        //Ejemplo: 3.50 a devolver en el cambio
+        let cambioRestante = cantidad;
+        //Array para guardar las monedas a devolver
+        let cambio = [];
+        //Array para registrar que monedas usamos
+        let monedasUsadas = [];
+
+        //Copia para no modificar la original
+        let monedasTemporales = [];
+        for(let i=0; i<monedasDisponibles.length; i++){
+            let moneda = monedasDisponibles[i];
+            monedasTemporales.push({
+                valor: moneda.valor,
+                cantidad: moneda.cantidad,
+                tipo: moneda.tipo
+            })
+        }
+
+        //Algoritmo voraz
+        for(let i=0; i<monedasTemporales.length;i++){
+            let moneda = monedasTemporales[i];
+
+            if(cambioRestante <=0){
+                break;
+            }
+            //Primera vuelta, y sigue hasta que la cantidad sea = 0
+            // aqui cogemos y divide 3.50 / moneda 2€ = 1
+            let cantidadNecesaria = Math.floor(cambioRestante/moneda.valor);
+            // (1, (15 monedas de 2€) = 1)
+            let cantidadUsar = Math.min(cantidadNecesaria,moneda.cantidad);
+
+            if(cantidadUsar>0){
+                // 3.50 - (1 * 2) = 1.50
+                cambioRestante -= cantidadUsar * moneda.valor;
+                cambioRestante = Math.round(cambioRestante*100)/100;
+
+                //Agregar el cambio
+                for(let j=0;j<cantidadUsar;j++){
+                    //Aqui pusheamos la moneda de 2€ que necesitamos
+                    cambio.push(moneda.valor);
+                }
+
+                monedasUsadas.push({
+                    tipo: moneda.tipo,
+                    cantidad: cantidadUsar,
+                    valor: moneda.valor
+                })
+
+            }
+        }
+        if(cambioRestante>0.01){
+            return res.json({
+                success: false,
+                error: "No hay cambio suficiente en la máquina",
+                cambioRestante: cambioRestante
+            })
+        }
+        res.json({
+            success: true,
+            cambioTotal: cantidad, //3.50 de cambio
+            monedas: cambio, // las monedas que en este caso necesitariamos [2,1,0.50]
+            desglose: monedasUsadas, //detalles de las monedas
+            mensaje: `Cambio: ${cantidad.toFixed(2)}€`
+        });
+    }
+    catch(error){
+        console.error("Error calculando cambio:", error);
+    }
+})
 
 //Todas las rutas
 app.get('/', (req, res) => {

@@ -33,6 +33,8 @@ async function connectarBd(){
     }
 }
 
+//Esquemas
+
 const ProductoEsquema = new mongoose.Schema({
     codigo: String,
     precio: Number,
@@ -55,6 +57,7 @@ const Producto = mongoose.model('Producto', ProductoEsquema);
 const Venta = mongoose.model('Venta', VentaEsquema);
 const Caja = mongoose.model('Caja', CajaEsquema);
 
+//Iniciar la base de datos con datos base
 async function iniciarProductos(){
     const lista = await Producto.countDocuments();
     if(lista === 0){
@@ -76,7 +79,9 @@ async function iniciarProductos(){
     }
 }
 
-//Rutas
+//  -- Rutas --
+
+//Obtener productos, se va a necesitar para saber datos de los productos como el precio
 app.get('/api/productos',async(req,res)=>{
     try{
         const productos = await Producto.find();
@@ -87,10 +92,11 @@ app.get('/api/productos',async(req,res)=>{
     }
 })
 
+//Realizar una compra
 app.post('/api/comprar',async(req,res)=>{
     try{
         const {codigo,pagoRecibido} = req.body;
-        // Validar datos recibidos
+        // Validar datos recibidos, si no hay código o dinero no hay datos suficientes para la compra 
         if (!codigo || !pagoRecibido) {
             return res.status(400).json({ 
                 success: false, 
@@ -98,6 +104,7 @@ app.post('/api/comprar',async(req,res)=>{
             });
         }
 
+        //Buscamos el producto por el código
         const producto = await Producto.findOne({codigo});
         if(!producto){
             console.log("Producto no encontrado");
@@ -106,6 +113,7 @@ app.post('/api/comprar',async(req,res)=>{
                 error: `Producto ${codigo} no encontrado`
             });
         }
+        //Si el producto está agotado
         if(producto.stock <=0){
             console.log("Producto agotado");
             return res.status(400).json({
@@ -113,6 +121,7 @@ app.post('/api/comprar',async(req,res)=>{
                 error: `Producto ${codigo} agotado`
             });
         }
+        //Si el pago que ponemos es menor que el precio del producto
         if(pagoRecibido < producto.precio){
             console.log("Dinero insuficiente");
             return res.status(400).json({
@@ -124,6 +133,7 @@ app.post('/api/comprar',async(req,res)=>{
         if(!caja){
             caja = await Caja.create({});
         }
+        //Calculamos el cambio
         const cambio = pagoRecibido - producto.precio;
         if(cambio > 0 && cambio > caja.saldoCambio){
             console.log("No hay cambio disponible");
@@ -153,6 +163,7 @@ app.post('/api/comprar',async(req,res)=>{
         })
         console.log("Compra exitosa",venta);
 
+        //Mensajes detallados para el front 
         return res.json({
             success: true,
             message: "Compra realizada con éxito",
@@ -169,9 +180,11 @@ app.post('/api/comprar',async(req,res)=>{
     }
 })
 
+//Obtener la caja
 app.get('/api/caja',async(req,res)=>{
     try {
         const caja = await Caja.findOne();
+        //Si no hay caja se crea
         if (!caja) {
             const nuevaCaja = await Caja.create({});
             console.log("Crear caja")
@@ -188,6 +201,7 @@ app.put('/api/admin/producto/:codigo',async(req,res)=>{
     try{
         const {codigo} = req.params;
         const {stock,precio} = req.body;
+        const stock_maximo = 10;
 
         const producto = await Producto.findOne({codigo});
         if(!producto){
@@ -197,12 +211,43 @@ app.put('/api/admin/producto/:codigo',async(req,res)=>{
                 error: `Producto ${codigo} no encontrado` 
             });
         }
+        //Si el stock tiene un valor
         if (stock !== undefined) {
+            //Si el stock es mayor que el máximo, se queda con el actual
+            if(stock > stock_maximo){
+                return res.status(400).json({ 
+                    success: false, 
+                    error: `El stock no puede superar ${stock_maximo} unidades`,
+                    stockActual: producto.stock,
+                    stockMaximo: stock_maximo,
+                });
+            }
+            //Si el stock es negativo queda como estaba
+            if(stock < 0){  
+                console.log("No puede ser el stock negativo");
+                return res.status(400).json({ 
+                    success: false, 
+                    error: "El stock no puede ser negativo",
+                    stockActual: producto.stock,
+                    stockSolicitado: stock
+                });
+            }
+            //Actualizamos si es positivo
             console.log(`Actualizando stock de ${producto.stock} a ${stock}`);
             producto.stock = stock;
         }
-        
+        //Si el precio está definido
         if (precio !== undefined) {
+            //Si el precio es negativo o cero, no es válido
+            if (precio <= 0) {
+                console.log(`Precio no válido: ${precio}`);
+                return res.status(400).json({ 
+                    success: false, 
+                    error: "El precio debe ser mayor que 0",
+                    precioActual: producto.precio,
+                });
+            }
+            //Se actualiza por uno válido
             console.log(`Actualizando precio de ${producto.precio} a ${precio}`);
             producto.precio = precio;
         }
@@ -218,7 +263,7 @@ app.put('/api/admin/producto/:codigo',async(req,res)=>{
         console.log("Error");
     }
 })
-
+//Actualizamos una retirada de la caja, que tenga que ser inferior a la caja 
 app.post('/api/admin/retirar',async(req,res)=>{
     try{
         const{cantidad} = req.body;
@@ -238,7 +283,7 @@ app.post('/api/admin/retirar',async(req,res)=>{
     }
 })
 
-
+//Por otro lado tenemos una caja extra que sirve para los cambios y vamos añadiendo a medida que se va usando
 app.post('/api/admin/agregar',async(req,res)=>{
     try{
         const{cantidad} = req.body;
@@ -256,7 +301,7 @@ app.post('/api/admin/agregar',async(req,res)=>{
 })
 
 
-
+//Todas las rutas
 app.get('/', (req, res) => {
     res.json({ 
         message: 'Máquina Expendedora funcionando',

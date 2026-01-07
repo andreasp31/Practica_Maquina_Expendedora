@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded',async function(){
         console.log("Productos cargados del servidor");
     }
 
+    //Botones
     let botonDinero = document.getElementById('ir_monedas');
     let botonCerrar = document.getElementById('volver_maquina');
     let botonConfirmarSaldo = document.getElementById('boton_saldo');
@@ -44,6 +45,7 @@ document.addEventListener('DOMContentLoaded',async function(){
     let botonAdmin = document.getElementById('seccion_admin');
     let botonCerrar2 = document.getElementById('volver_maquina2');
     
+    //Funcionalidad de los botones
     if (botonDinero) {
         botonDinero.addEventListener('click', function(){
             console.log("Al dar el botón de las monedas, abre el modal");
@@ -94,6 +96,7 @@ document.addEventListener('DOMContentLoaded',async function(){
     let modal2 =  document.getElementById('ventana_admin');
     let ventana2 = document.getElementById('ventana_interior2');
     
+    //Ocultar los modales al iniciar el programa
     if (modal) {
         modal.style.display = 'none';
     }
@@ -111,6 +114,7 @@ document.addEventListener('DOMContentLoaded',async function(){
     borrarDigito();
 });
 
+//Funciones para enseñar y ocultar con botones
 function mostrarModal() {
     let modal = document.getElementById('ventana_dinero');
     let ventana = document.getElementById('ventana_cartera');
@@ -140,6 +144,7 @@ async function mostrarModal2() {
         ventana2.style.display = 'flex';
     }
 
+    //Al iniciar el modal del administrador tenemos que ver los datos: saldo de las cajas y las propiedades de los productos (stock y precios)
     const datosCaja = await verCaja();
     let cajaActual = document.getElementById('caja_total');
     cajaActual.textContent = datosCaja.data.saldoMaquina + "€";
@@ -163,6 +168,7 @@ async function mostrarModal2() {
             elementoPrecio.textContent = producto.precio;
         }
     }
+    //Llamar funciones de contadores para cambios de precios y stock y cajas
     sumarStock();
     sumarPrecio();
     sacarDinero();
@@ -170,14 +176,20 @@ async function mostrarModal2() {
 
     let botonGuardar = document.getElementById('boton_guardar_admin');
     botonGuardar.addEventListener('click', async function(){
+        //Al guardar manda a la base de datos los cambios realizados en el modal
         guardarStockServidor();
         guardarPreciosServidor();
         guardarCaja();
         let informacion_general = document.getElementById('mensaje_informativo_general');
-        informacion_general.textContent = "Los datos fueron actualizados correctamente, reiniciar la máquina"
+        informacion_general.textContent = "Los datos fueron actualizados correctamente"
+        //Resetea la máquina automáticamente
+        setTimeout(() => {
+                location.reload();
+        }, 2000);
     })
 }
 
+//Funciones para optener datos
 async function verProducto(){
     const respuesta = await fetch("http://localhost:3000/api/productos");
     const datos = await respuesta.json();
@@ -190,6 +202,7 @@ async function verCaja(){
     return datos;
 }
 
+//Función de contador de cambios de stock
 function sumarStock(){
     for(let i=0; i<productos.length; i++){
         let producto = productos[i];
@@ -216,6 +229,7 @@ function sumarStock(){
     } 
 }
 
+//Función de contador de cambios de precio
 function sumarPrecio(){
     for(let i=0; i<productos.length; i++){
         let producto = productos[i];
@@ -242,6 +256,7 @@ function sumarPrecio(){
     } 
 }
 
+//Función de contador para retirar dinero de la caja
 async function sacarDinero(){
     const datosCaja = await verCaja();
     let retirarCaja = document.getElementById('mas_dinero_retirar');
@@ -266,6 +281,7 @@ async function sacarDinero(){
     }
 }
 
+//Función de contador para agregar dinero a la caja de cambios
 async function ponerCambios(){
     const datosCaja = await verCaja();
     let ponerCambio = document.getElementById('mas_dinero_cambios');
@@ -295,7 +311,6 @@ async function guardarStockServidor(){
         let producto = productos[i];
         let contador = document.getElementById(`mas_stock_${producto.codigo}`);
         let stockAdicional = parseInt(contador.textContent);
-
         if(!contador) {
             console.log(`No se encontró contador para producto ${producto.codigo}`);
         }
@@ -303,6 +318,7 @@ async function guardarStockServidor(){
         if(stockAdicional > 0){
             try{
                 let nuevoStock = producto.stock + stockAdicional;
+                //Actualizamos a la base de datos el nuevo stock
                 const actualizar = await fetch(`http://localhost:3000/api/admin/producto/${producto.codigo}`, {
                     method: 'PUT',
                     headers: {
@@ -312,9 +328,12 @@ async function guardarStockServidor(){
                         stock: nuevoStock 
                     })
             });
+            //Si está bien nos enseña un mensaje y actualiza el contador
             if(actualizar.ok){
                 productos[i].stock = nuevoStock;
                 contador.textContent = "0";
+                let notificacion = document.getElementById('notifiacion_cambios_stock');
+                notificacion.textContent = "Actualizado stock del producto: " + producto.codigo;
             }
             console.log("Stock actualizado", nuevoStock);
             }
@@ -341,6 +360,7 @@ async function guardarPreciosServidor(){
         if(precioAdicional > 0){
             try{
                 let nuevoPrecio = producto.precio + precioAdicional;
+                //Actualizamos a la base de datos el nuevo precio
                 const actualizar = await fetch(`http://localhost:3000/api/admin/producto/${producto.codigo}`, {
                     method: 'PUT',
                     headers: {
@@ -350,9 +370,12 @@ async function guardarPreciosServidor(){
                         precio: nuevoPrecio
                     })
             });
+            //Si está bien nos enseña un mensaje y actualiza el contador
             if(actualizar.ok){
                 productos[i].precio = nuevoPrecio;
                 contador.textContent = "0";
+                let notificacion = document.getElementById('notifiacion_cambios_precio');
+                notificacion.textContent = "Actualizado precio del producto: " + producto.codigo;
             }
             console.log("Precio actualizado", nuevoPrecio);
             }
@@ -378,9 +401,15 @@ async function guardarCaja(){
         let contador_cambios = document.getElementById('mas_dinero_cambios');
         let cambios = parseInt(contador_cambios.textContent); 
 
+        //Notificaciones de cambio en las cajas
+        let notificacion = document.getElementById('mensaje_informativo_retirar');
+        notificacion.textContent =  "Se han retirado:" + retirada + " €";
+
+        let notificacion2 = document.getElementById('mensaje_informativo_cambios');
+        notificacion2.textContent =  "Se han añadido:" + cambios + " €, para cambios"
+
         if(retirada === 0 && cambios === 0) {
             console.log("No hay cambios en la caja para guardar");
-            alert("No hay cambios en la caja para guardar");
             return;
         }
 
@@ -389,6 +418,7 @@ async function guardarCaja(){
                 console.log("No hay suficiente saldo para retirar");
                 return;
             }
+            //Actualizamos la caja 
             const actualizar_retirada = await fetch(`http://localhost:3000/api/admin/retirar`,{
                 method: 'POST',
                 headers:{
@@ -401,13 +431,13 @@ async function guardarCaja(){
             if(actualizar_retirada.ok){
                 const resultadoRetirar = await actualizar_retirada.json();
                 contador_retirar.textContent = "0";
-                let notificacion = document.getElementById('mensaje_informativo_retirar');
-                notificacion.textContent =  "Se han retirado:" + retirada + " €";
+                
             }
             
         }
 
         if(cambios > 0){
+            //Actualizamos la caja 
             const actualizar_cambios = await fetch(`http://localhost:3000/api/admin/agregar`,{
                 method: 'POST',
                 headers:{
@@ -419,13 +449,11 @@ async function guardarCaja(){
             })
             const resultadoCambio = await actualizar_cambios.json();
             contador_cambios.textContent = "0";
-            let notificacion = document.getElementById('mensaje_informativo_cambios');
-            notificacion.textContent =  "Se han añadido:" + cambios + " €, para cambios"
         }
 
     }
     catch(error){
-
+        console.log("Ha habido un error");
     }
 
 }
@@ -441,6 +469,7 @@ function ocultarModal2(){
     }
 }
 
+//Monedas seleccionadas
 function configurarMonedas(){
     let monedas = document.querySelectorAll('.botones_monedas');
     for(let i=0; i<monedas.length; i++){
@@ -457,6 +486,7 @@ function configurarMonedas(){
     }
 }
 
+//Al pinchar saber que estamos seleccionado y devolver su valor
 function obtenerValor(monedaId){
     switch(monedaId){
         case '5c':{
@@ -502,6 +532,7 @@ function obtenerValor(monedaId){
     }
 }
 
+//Lo acumulamos en un saldo total
 function agregarMoneda(valor){
     saldoTotal += valor;
 
@@ -509,6 +540,7 @@ function agregarMoneda(valor){
     actualizarContador();
 }
 
+//Actualizamos el contador del saldo total a medida que vamos metiendo monedas
 function actualizarContador(){
     let contador = document.getElementById('saldoReal');
     if(contador){
@@ -519,12 +551,14 @@ function actualizarContador(){
     }
 }
 
+//Reseteamos el saldo si se cierra el modal
 function resetearSaldo(){
     saldoTotal = 0;
     console.log("Resetear saldo");
     actualizarContador();
 }
 
+//Que estamos pinchando lo pasamos al switch de la otra función y nos devolverá el valor
 function configurarNumeros(){
     let numeros = document.querySelectorAll('.teclas');
     for(let i=0; i<numeros.length; i++){
@@ -541,6 +575,7 @@ function configurarNumeros(){
     }
 }
 
+//Función para saber que número estamos pinchando para seleccionar el producto
 function obtenerValorNumero(numeroId){
     switch(numeroId){
         case 'tecla0':{
@@ -588,7 +623,7 @@ function obtenerValorNumero(numeroId){
         }
     }
 }
-
+//Esos números se añaden y tienen que ser de 2 dígitos y que exista
 function agregarNumero(numero){
     if(productoSeleccionado.length < 2){
         productoSeleccionado += numero.toString();
@@ -602,6 +637,7 @@ function agregarNumero(numero){
     }
 }
 
+//Nos enseña que número estamos seleccionado
 function actualizarContadorNumeros(){
     let pantallaSelectora = document.getElementById('pantalla_selector');
     if(pantallaSelectora){
@@ -612,6 +648,7 @@ function actualizarContadorNumeros(){
     }
 }
 
+//La opción para borrar uno de los dígitos por si nos hemos equivocado
 function borrarDigito(){
     let teclaBorrar = document.getElementById('icono_teclado1');
     if(teclaBorrar){
@@ -634,11 +671,7 @@ function buscarProducto(codigo){
     }
     return null;
 }
-
-function calcularCaja(){
-
-}
-
+//Función para mostrar el precio actual seleccionado de un producto
 function buscarProductoMostrar(){
     productoActual = buscarProducto(productoSeleccionado);
     if(productoActual){
@@ -652,6 +685,7 @@ function buscarProductoMostrar(){
     }
 }
 
+//Función que nos enseña mensajes y no tener que dividirlo con varias clases(esto lo busqué y me pareció útil y fácil de usar)
 function mostrarMensajeEnPantalla(mensaje, color) {
     const pantalla = document.getElementById('pantalla_info');
     if (pantalla) {
@@ -688,7 +722,7 @@ async function confirmarCompra(){
         mostrarMensaje(`Faltan ${dineroFalta}€`, "mal");
     }
 
-
+    //Nos realizar la compra pasándole los datos que en el server realizar las operaciones
     const resultado = await conectarServidor("comprar",{
         codigo: productoSeleccionado,
         pagoRecibido: saldoTotal
@@ -702,18 +736,20 @@ async function confirmarCompra(){
         if(cambio > 0){
             const devolverCambio = document.getElementById('cambio');
             if(devolverCambio){
+            //Nos enseña el cambio
             devolverCambio.textContent = "Cambio: " + saldoTotal.toFixed(2) + "€";
             }
         }
+        //Al hacer la compra ya nos enseña que está realizada y nos da un cambio
         let recoger = document.getElementById('compra_realizada');
         recoger.addEventListener('click',function(){
             if(recoger){
                 compra.textContent = "Muchas gracias"
-                resetearTodo();
             }
         })
         //actualizar el stock localmente por si se quiere realizar otra compra
         productoActual.stock -= 1;
+        //resetea la pantalla y los bloques con notificaciones
         setTimeout(()=>{
             resetearTodo();
         },3000);
@@ -724,6 +760,7 @@ async function confirmarCompra(){
 
 }
 
+//Función que resetea todos los bloques de notificaciones 
 function resetearTodo(){
     resetearSaldo();
     productoSeleccionado = "";

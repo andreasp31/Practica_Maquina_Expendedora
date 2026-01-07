@@ -611,10 +611,10 @@ body{
     border-radius: 2em;
     width: 10em;
     height: 3em;
-    align-self: center;
     text-align: center;
     justify-self: center;
     cursor: pointer;
+    align-self: flex-end;
 }
 
 .ventana_inferior{
@@ -665,6 +665,7 @@ body{
     gap:1em;
     display: flex;
     flex-direction: column;
+    text-align: center;
 }
 
 #columna4{
@@ -673,6 +674,7 @@ body{
     gap:1em;
     display: flex;
     flex-direction: column;
+    text-align: center;
 }
 
 .columna_stock{
@@ -777,4 +779,8 @@ body{
     margin-top: 7em;
     align-content: center;
     text-align: center;
+}
+
+.notificacion{
+    color: #C5915D;
 }

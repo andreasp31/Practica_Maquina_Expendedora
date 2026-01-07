@@ -609,7 +609,6 @@ body{
     border-width: 0.15em;
     border-style: solid;
     border-radius: 2em;
-    margin-top: 7em;
     width: 10em;
     height: 3em;
     align-self: center;
@@ -696,7 +695,7 @@ body{
     display: flex;
     flex-direction: row;
     align-items: center; 
-    gap:1.5em;
+    gap:0.5em;
 }
 
 .boton_menos{
@@ -765,4 +764,17 @@ body{
     gap:2em;
     align-items: center;
     justify-content: center;
+}
+
+.mas_stock{
+    padding: 0em;
+}
+
+#bloque_inferior{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-top: 7em;
+    align-content: center;
+    text-align: center;
 }

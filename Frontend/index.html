@@ -2,14 +2,6 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
     <title>Máquina Expendedora</title>
     <link rel="stylesheet" href="style.css">
   </head>
@@ -165,11 +157,12 @@
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>10</p></div>
                       <div class="boton_menos" id="menos_10"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_10">0</div>
                       <div class="boton_mas" id="mas_10"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_10"></p>
                     </div>
                   </div>
                 </div>
@@ -178,12 +171,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>11</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_11"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_11">0</div>
+                      <div class="boton_mas" id="mas_11"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_11"></p>
                     </div>
                   </div>
                 </div>
@@ -192,12 +186,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>12</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_12"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_12">0</div>
+                      <div class="boton_mas" id="mas_12"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_12"></p>
                     </div>
                   </div>
                 </div>
@@ -206,12 +201,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>13</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_13"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_13">0</div>
+                      <div class="boton_mas" id="mas_13"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_13"></p>
                     </div>
                   </div>
                 </div>
@@ -220,12 +216,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>14</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_14"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_14">0</div>
+                      <div class="boton_mas" id="mas_14"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_14"></p>
                     </div>
                   </div>
                 </div>
@@ -234,12 +231,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>15</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_15"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_15">0</div>
+                      <div class="boton_mas" id="mas_15"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_15"></p>
                     </div>
                   </div>
                 </div>
@@ -248,12 +246,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>16</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_16"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_16">0</div>
+                      <div class="boton_mas" id="mas_16"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_16"></p>
                     </div>
                   </div>
                 </div>
@@ -262,12 +261,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>17</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_17"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_17">0</div>
+                      <div class="boton_mas" id="mas_17"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_17"></p>
                     </div>
                   </div>
                 </div>
@@ -276,12 +276,13 @@
                  <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>18</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_18"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_18">0</div>
+                      <div class="boton_mas" id="mas_18"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_18"></p>
                     </div>
                   </div>
                 </div>
@@ -290,12 +291,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>19</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_19"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_19">0</div>
+                      <div class="boton_mas" id="mas_19"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_19"></p>
                     </div>
                   </div>
                 </div>
@@ -304,12 +306,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>20</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_20"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_20">0</div>
+                      <div class="boton_mas" id="mas_20"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_20"></p>
                     </div>
                   </div>
                 </div>
@@ -318,12 +321,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>21</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menos_21"><p>-</p></div>
+                      <div class="mas_stock" id="mas_stock_21">0</div>
+                      <div class="boton_mas" id="mas_21"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Stock disponible:</p> 
-                      <p>10</p>
+                      <p id="stock_21"></p>
                     </div>
                   </div>
                 </div>
@@ -337,12 +341,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>10</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_10"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_10">0</div>
+                      <div class="boton_mas" id="masp_10"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>3.00</p>
+                      <p id="precio_10"></p>
                     </div>
                   </div>
                 </div>
@@ -351,12 +356,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>11</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_11"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_11">0</div>
+                      <div class="boton_mas" id="masp_11"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>3.00</p>
+                      <p id="precio_11"></p>
                     </div>
                   </div>
                 </div>
@@ -365,12 +371,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>12</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_12"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_12">0</div>
+                      <div class="boton_mas" id="masp_12"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>3.00</p>
+                      <p id="precio_12"></p>
                     </div>
                   </div>
                 </div>
@@ -379,12 +386,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>13</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_13"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_13">0</div>
+                      <div class="boton_mas" id="masp_13"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>3.00</p>
+                      <p id="precio_13"></p>
                     </div>
                   </div>
                 </div>
@@ -393,12 +401,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>14</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_14"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_14">0</div>
+                      <div class="boton_mas" id="masp_14"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>1.50</p>
+                      <p id="precio_14"></p>
                     </div>
                   </div>
                 </div>
@@ -407,12 +416,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>15</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_15"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_15">0</div>
+                      <div class="boton_mas" id="masp_15"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>1.50</p>
+                      <p id="precio_15"></p>
                     </div>
                   </div>
                 </div>
@@ -421,12 +431,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>16</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_16"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_16">0</div>
+                      <div class="boton_mas" id="masp_16"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>1.50</p>
+                      <p id="precio_16"></p>
                     </div>
                   </div>
                 </div>
@@ -435,12 +446,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>17</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_17"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_17">0</div>
+                      <div class="boton_mas" id="masp_17"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>1.50</p>
+                      <p id="precio_17"></p>
                     </div>
                   </div>
                 </div>
@@ -449,12 +461,13 @@
                  <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>18</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_18"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_18">0</div>
+                      <div class="boton_mas" id="masp_18"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>2.00</p>
+                      <p id="precio_18"></p>
                     </div>
                   </div>
                 </div>
@@ -463,12 +476,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>19</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_19"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_19">0</div>
+                      <div class="boton_mas" id="masp_19"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>2.00</p>
+                      <p id="precio_19"></p>
                     </div>
                   </div>
                 </div>
@@ -477,12 +491,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>20</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_20"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_20">0</div>
+                      <div class="boton_mas" id="masp_20"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>2.00</p>
+                      <p id="precio_20"></p>
                     </div>
                   </div>
                 </div>
@@ -491,12 +506,13 @@
                   <div class="columna_stock">
                     <div class="stock_nuevo">
                       <div class="numero_elementos"><p>21</p></div>
-                      <div class="boton_menos" id="menos_10"><p>-</p></div>
-                      <div class="boton_mas" id="mas_10"><p>+</p></div>
+                      <div class="boton_menos" id="menosp_21"><p>-</p></div>
+                      <div class="mas_stock" id="mas_precio_21">0</div>
+                      <div class="boton_mas" id="masp_21"><p>+</p></div>
                     </div>
                     <div class="stock_elementos">
                       <p>Precio establecido:</p> 
-                      <p>2.00</p>
+                      <p id="precio_21"></p>
                     </div>
                   </div>
                 </div>
@@ -505,15 +521,20 @@
             <div id="columna3">
               <div class="titulos_admin">Sacar dinero</div>
               <div class="caja_dinero"><div>Saldo disponible en la máquina: </div><div id="caja_total"></div></div>
-              <div class="botones_admin"><div class="boton_menos">-</div><p>Retirar</p><div class="boton_mas">+</div></div>
+              <div class="botones_admin"><div class="boton_menos" id="botonR_menos">-</div><p id="mas_dinero_retirar">0</p><div class="boton_mas" id="botonR_mas">+</div></div>
+              <div id="mensaje_informativo_retirar"></div>
             </div>
             <div id="columna4">
               <div class="titulos_admin">Dinero para cambio</div>
-              <div class="caja_dinero"><div>Saldo de la máquina para cambios: </div><div id="caja_total"></div></div>
-              <div class="botones_admin"><div class="boton_menos">-</div><p>Añadir</p><div class="boton_mas">+</div></div>
+              <div class="caja_dinero"><div>Saldo de la máquina para cambios: </div><div id="cambios_total"></div></div>
+              <div class="botones_admin"><div class="boton_menos" id="botonC_menos">-</div><p id="mas_dinero_cambios">0</p><div class="boton_mas" id="botonC_mas">+</div></div>
+              <div id="mensaje_informativo_cambios"></div>
             </div>
           </div>
-          <div id="boton_guardar_admin"><p>Guardar</p></div>
+          <div id="bloque_inferior">
+            <div id="mensaje_informativo_general"></div>
+            <div id="boton_guardar_admin"><p>Guardar</p></div>
+          </div>
         </div>
       </div>
     </div>

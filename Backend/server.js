@@ -90,15 +90,35 @@ app.get('/api/productos',async(req,res)=>{
 app.post('/api/comprar',async(req,res)=>{
     try{
         const {codigo,pagoRecibido} = req.body;
+        // Validar datos recibidos
+        if (!codigo || !pagoRecibido) {
+            return res.status(400).json({ 
+                success: false, 
+                error: "Datos incompletos" 
+            });
+        }
+
         const producto = await Producto.findOne({codigo});
         if(!producto){
             console.log("Producto no encontrado");
+            return res.status(404).json({
+                success: false,
+                error: `Producto ${codigo} no encontrado`
+            });
         }
         if(producto.stock <=0){
             console.log("Producto agotado");
+            return res.status(400).json({
+                success: false,
+                error: `Producto ${codigo} agotado`
+            });
         }
         if(pagoRecibido < producto.precio){
             console.log("Dinero insuficiente");
+            return res.status(400).json({
+                success: false,
+                error: `Dinero insuficiente`
+            });
         }
         let caja = await Caja.findOne();
         if(!caja){
@@ -107,12 +127,14 @@ app.post('/api/comprar',async(req,res)=>{
         const cambio = pagoRecibido - producto.precio;
         if(cambio > 0 && cambio > caja.saldoCambio){
             console.log("No hay cambio disponible");
+            return res.status(400).json({
+                success: false,
+                error: "No hay cambio disponible en la máquina"
+            });
         }
 
         //Reducir stock
         producto.stock -=1;
-        caja.saldoMaquina += producto.precio;
-        caja.saldoCambio -= cambio;
         await producto.save();
 
         //Actualizar caja
@@ -129,7 +151,17 @@ app.post('/api/comprar',async(req,res)=>{
             pagoRecibido: pagoRecibido,
             cambioDevuelto: cambio
         })
-        console.log("Compra exitosa");
+        console.log("Compra exitosa",venta);
+
+        return res.json({
+            success: true,
+            message: "Compra realizada con éxito",
+            producto: producto.codigo,
+            precio: producto.precio,
+            cambio: cambio,
+            nuevoStock: producto.stock,
+            ventaId: venta._id
+        });
 
     }
     catch(error){
@@ -158,11 +190,29 @@ app.put('/api/admin/producto/:codigo',async(req,res)=>{
         const {stock,precio} = req.body;
 
         const producto = await Producto.findOne({codigo});
-        if(!codigo){
+        if(!producto){
             console.log("Producto no encontrado");
+            return res.status(404).json({ 
+                success: false, 
+                error: `Producto ${codigo} no encontrado` 
+            });
+        }
+        if (stock !== undefined) {
+            console.log(`Actualizando stock de ${producto.stock} a ${stock}`);
+            producto.stock = stock;
+        }
+        
+        if (precio !== undefined) {
+            console.log(`Actualizando precio de ${producto.precio} a ${precio}`);
+            producto.precio = precio;
         }
         await producto.save();
         console.log("Producto actualizado");
+        return res.json({ 
+            success: true, 
+            message: "Producto actualizado correctamente",
+            producto 
+        });
     }
     catch(error){
         console.log("Error");

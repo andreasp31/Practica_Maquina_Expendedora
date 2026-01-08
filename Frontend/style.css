@@ -357,6 +357,7 @@ body{
     display: flex;
     justify-content: center;
     text-align: center;
+    cursor: pointer;
 }
 
 #icono_teclado1{
@@ -395,6 +396,18 @@ body{
     height: 45em;
     border-radius: 2em;
     padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+#vantana_interior_cambio{
+    background-color: white;
+    width: 50em;
+    height: 20em;
+    border-radius: 2em;
+    padding: 2em;
+    gap:0.2em;
     display: flex;
     flex-direction: column;
     align-items:center;
@@ -454,6 +467,20 @@ body{
     align-content: center;
     align-items: center;
     display: flex;
+}
+
+#ventana_cambio{
+    z-index: 3;
+    position: fixed;
+    background-color: #00000066;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
 .logo{
@@ -783,4 +810,23 @@ body{
 
 .notificacion{
     color: #C5915D;
+}
+
+.boton_estilo{
+    background-color: #332011;
+    color:white;
+    border-width: 0.15em;
+    border-style: solid;
+    border-radius: 2em;
+    width: 10em;
+    height: 3em;
+    text-align: center;
+    justify-self: center;
+    cursor: pointer;
+    align-self: center;
+    justify-content: center;
+}
+
+h3{
+    color: #332011;
 }

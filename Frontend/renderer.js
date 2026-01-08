@@ -95,6 +95,8 @@ document.addEventListener('DOMContentLoaded',async function(){
     let ventana = document.getElementById('ventana_cartera');
     let modal2 =  document.getElementById('ventana_admin');
     let ventana2 = document.getElementById('ventana_interior2');
+    let modal3 = document.getElementById('ventana_cambio');
+    let ventana3 = document.getElementById('vantana_interior_cambio');
     
     //Ocultar los modales al iniciar el programa
     if (modal) {
@@ -108,6 +110,12 @@ document.addEventListener('DOMContentLoaded',async function(){
     }
     if (ventana2) {
         ventana2.style.display = 'none';
+    }
+    if(modal3){
+        modal3.style.display = 'none';
+    }
+    if(ventana3){
+        ventana3.style.display = 'none';
     }
     configurarMonedas();
     configurarNumeros();
@@ -227,6 +235,32 @@ function sumarStock(){
             })
         }
     } 
+}
+
+function mostrarModal3() {
+    let modal = document.getElementById('ventana_cambio');
+    let ventana = document.getElementById('vantana_interior_cambio');
+    
+    if (modal && ventana) {
+        modal.style.display = 'flex';
+        ventana.style.display = 'flex';
+    }
+
+    let botonResetear = document.getElementById('boton_recoger');
+    botonResetear.addEventListener('click',function(){
+        ocultarModal3();
+    })
+}
+
+function ocultarModal3() {
+    let modal = document.getElementById('ventana_cambio');
+    let ventana = document.getElementById('vantana_interior_cambio');
+    
+    if (modal && ventana) {
+        modal.style.display = 'none';
+        ventana.style.display = 'none';
+    }
+    resetearTodo();
 }
 
 //Función de contador de cambios de precio
@@ -696,6 +730,9 @@ function mostrarMensajeEnPantalla(mensaje, color) {
 }
 
 async function confirmarCompra(){
+    console.log("--- Inicio Compra ---");
+    console.log("productoSeleccionado:", productoSeleccionado);
+    console.log("saldoTotal:", saldoTotal);
     //Verificar que hay un producto seleccionado
     if(!productoSeleccionado || productoSeleccionado.length !== 2){
         mostrarMensajeEnPantalla("Selecciona producto e inserta dinero", "mal");
@@ -704,11 +741,16 @@ async function confirmarCompra(){
 
     // Verificar saldo
     if(saldoTotal <= 0){
-        mostrarMensaje("Inserta dinero primero", "mal");
+        mostrarMensajeEnPantalla("Inserta dinero primero", "mal");
         return;
     }
 
     productoActual = buscarProducto(productoSeleccionado);
+
+    if(!productoActual){
+        mostrarMensajeEnPantalla("Producto no encontrado","mal");
+        return;
+    }
 
     //Verificar stock del producto
     if(productoActual.stock <= 0){
@@ -719,38 +761,50 @@ async function confirmarCompra(){
     //Verificar que haya saldo suficiente 
     if(saldoTotal < productoActual.precio){
         const dineroFalta = (productoActual.precio - saldoTotal).toFixed(2);
-        mostrarMensaje(`Faltan ${dineroFalta}€`, "mal");
+        mostrarMensajeEnPantalla(`Faltan ${dineroFalta}€`, "mal");
+        return;
     }
 
     //Nos realizar la compra pasándole los datos que en el server realizar las operaciones
     const resultado = await conectarServidor("comprar",{
         codigo: productoSeleccionado,
-        pagoRecibido: saldoTotal
+        pagoRecibido: parseFloat(saldoTotal.toFixed(2))
     })
 
 
     //Efectuar compra
-    if(resultado){
+    if(resultado && resultado.success){
         mostrarMensajeEnPantalla("Producto comprado", "ok");
-        const cambio = saldoTotal - productoActual.precio;
-        if(cambio > 0){
-            const devolverCambio = document.getElementById('cambio');
-            if(devolverCambio){
-                //Nos enseña el cambio
-                devolverCambio.textContent = "Cambio: " + saldoTotal.toFixed(2) + "€";
-                devolverCambio.addEventListener('click',function(){
-                    setTimeout(()=>{
-                    resetearTodo();
-                    },3000);    
-                })
-                
+
+        const devolverCambio= document.getElementById('cambio');
+        const monedasADevolver = document.getElementById('monedas_devueltas');
+        if(devolverCambio){
+            devolverCambio.textContent = "";
+            if(resultado.cambio > 0 && resultado.monedasCambio.length > 0){
+                devolverCambio.textContent = "Cambio: " + resultado.cambio.toFixed(2) + "€\n\n";
+                devolverCambio.textContent += "Pinchar para recoger\n"
+
+                for(let i=0;i<resultado.monedasCambio.length;i++){
+                    let moneda = resultado.monedasCambio[i];
+                    monedasADevolver.textContent += `${moneda.cantidad} x (${moneda.valor}€) = ${moneda.total.toFixed(2)}€  | \n`;
+                }
+
+            }
+            else if(resultado.cambio > 0){
+                devolverCambio.textContent = "Cambio: " + resultado.cambio.toFixed(2) + "€"
+            }
+            else{
+                devolverCambio.textContent = "Pago exacto, sin cambio";
+            }
+            devolverCambio.onclick = function(){
+                mostrarModal3();
             }
         }
         //Al hacer la compra ya nos enseña que está realizada y nos da un cambio
         let recoger = document.getElementById('compra_realizada');
         recoger.addEventListener('click',function(){
             if(recoger){
-                compra.textContent = "Muchas gracias"
+                recoger.textContent = "Muchas gracias"
             }
         })
         //actualizar el stock localmente por si se quiere realizar otra compra
